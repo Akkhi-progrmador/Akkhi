@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Portfólio</title>
+    <style>
+        /* Importação de fonte */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Corpo da Página */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #111827;
+            color: rgb(54, 189, 121);
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: #1F2937;
+            height: 100vh;
+            padding: 20px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sidebar img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+            border: 2px solid rgb(100, 8, 107);
+        }
+
+        .sidebar a {
+            text-decoration: none;
+            color: rgb(54, 189, 121);
+            font-weight: bold;
+            padding: 10px;
+            width: 100%;
+            text-align: center;
+            display: block;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: rgb(54, 189, 121);
+            color: #111827;
+        }
+
+        /* Conteúdo principal */
+        .content {
+            margin-left: 270px;
+            padding: 20px;
+            width: calc(100% - 270px);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        /* Container dos projetos */
+        .projetos-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+            
+        }
+
+        /* Estilo de cada projeto */
+        .projeto {
+            background: #1F2937;
+            border-radius: 10px;
+            border: 3px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            transition: transform 0.3s ease-in-out;
+            text-align: center;
+            border-shadow: 2px 2px solid rgb(54, 189, 121);
+        }
+
+        .projeto:hover {
+            transform: scale(1.05);
+        }
+
+        .projeto h2 {
+            font-size: 1.5rem;
+            color: rgb(54, 189, 121);
+            margin-bottom: 10px;
+        }
+
+        .projeto p {
+            font-size: 1rem;
+            color:rgb(117, 185, 206);
+            margin-bottom: 10px;
+        }
+
+        .projeto img {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        /* Botão estilizado */
+        .botao {
+            display: inline-block;
+            background-color:#111827;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.6s;
+        }
+
+        .botao:hover {
+            background-color: #111827;
+            color: rgb(54, 189, 121); 
+            
+        }
+        .botao:active {
+            transform: scale(1.05);
+        }
+
+        /* Responsividade */
+        @media (max-width: 720px) {
+            .sidebar {
+                width: 100px;
+                height: 100vh;
+                padding-top: 10px;
+            }
+        
+            .sidebar a {
+                font-size: 14px;
+                padding: 5px;
+            }
+        
+            .sidebar img {
+                width: 60px;
+                height: 60px;
+            }
+        
+            .container {
+                margin-left: 110px; /* Ajuste para o novo tamanho da sidebar */
+                width: calc(100% - 110px);
+            }
+        
+            input[type="text"] {
+                width: 90%;
+            }
+        
+            .tasks-container {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+        
+            .button {
+                display: block;
+                text-align: center;
+                padding: 8px;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <img src="media/img2.jpg" alt="Eu">
+        <a href="{% url 'sobre' %}">Sobre Mim</a>
+        <a href="/admin">Painel Admin</a>
+    </div>
+
+    <div class="content">
+        <h1>Meus Projetos</h1>
+        
+        <div class="projetos-container">
+            {% for projecto in projectos %}
+            <div class="projeto">
+                <p>{{ projecto.descricao }}</p>
+                {% if projecto.imagem %}
+                    <img src="{{ projecto.imagem.url }}" alt="{{ projecto.titulo }}">
+                {% endif %}
+                {% if projecto.link %}
+                    <p><a href="{{ projecto.link }}" target="_blank" class="botao">Ver mais</a></p>
+                {% endif %}
+                <h2>{{ projecto.titulo }}</h2>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+</html>
